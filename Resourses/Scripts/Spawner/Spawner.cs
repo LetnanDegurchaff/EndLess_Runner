@@ -30,13 +30,11 @@ public class Spawner : MonoBehaviour
     private void OnEnable()
     {
         _coroutine = StartCoroutine(Spawning());
-        _entityPool.OnEnable();
     }
 
     private void OnDisable()
     {
         StopCoroutine(_coroutine);
-        _entityPool.OnDisable();
     }
 
     public void CreateEntities(int count)

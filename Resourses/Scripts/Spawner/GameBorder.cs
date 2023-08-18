@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class GameBorder : MonoBehaviour
 {
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         other.gameObject.SetActive(false);
     }

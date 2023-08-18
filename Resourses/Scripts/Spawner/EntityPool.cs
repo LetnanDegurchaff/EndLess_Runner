@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class EntityPool
 {
-    private List<Entity> _spawnedEntities = new List<Entity>();
     private List<Entity> _notSpawnedEntities = new List<Entity>();
 
     public float EnemyRatio { get; private set;}
@@ -23,34 +22,16 @@ public class EntityPool
         Entity spawningEntity =
             _notSpawnedEntities[Random.Range(0, _notSpawnedEntities.Count)];
 
+        _notSpawnedEntities.Remove(spawningEntity);
+
         spawningEntity.transform.position = position;
         spawningEntity.gameObject.SetActive(true);
-
-        _notSpawnedEntities.Remove(spawningEntity);
-        _spawnedEntities.Add(spawningEntity);
         spawningEntity.Died += AddInDespawnedList;
-    }
-
-    public void OnEnable()
-    {
-        foreach (var entity in _spawnedEntities)
-        {
-            entity.Died += AddInDespawnedList;
-        }
-    }
-
-    public void OnDisable()
-    {
-        foreach (var entity in _spawnedEntities)
-        {
-            entity.Died -= AddInDespawnedList;
-        }
     }
 
     private void AddInDespawnedList(Entity entity)
     {
         _notSpawnedEntities.Add(entity);
-        _spawnedEntities.Remove(entity);
 
         entity.Died -= AddInDespawnedList;
     }
